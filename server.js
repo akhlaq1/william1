@@ -11,8 +11,7 @@ app.use(express.static(__dirname+'/fonts'));
 app.use(express.static(__dirname+'/img'));
 app.use(express.static(__dirname+'/js'));
 
-app.listen(process.env.PORT || 8080);
-
+app.listen(port=8080);
 app.get('/*',function(req,res){
     res.sendFile(path.join(__dirname+'/index.html'));
 });
