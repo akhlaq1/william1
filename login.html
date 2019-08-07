@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>REI Analytica - Ultimate Real Estate Investing Tool | Login</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">REI+</h1>
+
+            </div>
+            <h3>Welcome to REI Analytica</h3>
+            <p>Perfectly designed and precisely prepared for any Investor with the tools needed to succeeded.
+                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+            </p>
+            <p>Login in. To see it in action.</p>
+            <form class="m-t" role="form" action="">
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Username" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required="">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b" onclick="signInButton()">Login</button>
+
+                <a href="#"><small>Forgot password?</small></a>
+                <p class="text-muted text-center"><small>Do not have an account?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="register.html">Create an FREE account</a>
+            </form>
+            <p class="m-t"> <small>REI Analytica &copy; 2019</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-auth-js@1.3.2/lib/index.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+	<script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@3.0.15/lib/index.min.js"></script>   
+    <script src="js/config.js"></script>
+    
+    <script>
+        function signInButton() {
+          
+          var authenticationData = {
+              Username : document.getElementById("inputUsername").value,
+              Password : document.getElementById("inputPassword").value,
+          };
+          
+          var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+          
+          var poolData = {
+              UserPoolId : "us-east-2_nMbhhM72O" // Your user pool id here
+              ClientId : "5qajak75bqgmmnsm4hukdil9qm" // Your client id here
+          };
+          
+          var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+          
+          var userData = {
+              Username : document.getElementById("inputUsername").value,
+              Pool : userPool,
+          };
+          
+          var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+          
+          cognitoUser.authenticateUser(authenticationDetails, {
+              onSuccess: function (result) {
+                  var accessToken = result.getAccessToken().getJwtToken();
+                  window.location = "http://app.reianalytica.co/";
+                  console.log(accessToken);	
+              },
+              onFailure: function(err) {
+                  alert(err.message || JSON.stringify(err));
+              },
+          });
+        }
+      </script>
+
+</body>
+
+</html>
